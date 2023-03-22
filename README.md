@@ -6,12 +6,10 @@ This is a template for a simple Discord bot written in TypeScript based on [disc
 
 ### Code Setup
 
-Run `npm install` to install all required dependencies. Then you need to create a new application in the [Discord Developer Portal](https://discord.com/developers). Add a bot to the application and get the bot token. Create a new file `secrets/bot.json`. Paste the following code into your newly generated file and replace the string with your bot token:
+Run `npm install` to install all required dependencies. Then you need to create a new application in the [Discord Developer Portal](https://discord.com/developers). Add a bot to the application and get the bot token.  Copy the `.env.example` to a new file called `.env` and replace the token string with your bot token:
 
-```json
-{
-    "token": "insert token here"
-}
+```env
+TOKEN="your bot token here"
 ```
 
 ### Add the bot to your server

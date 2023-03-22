@@ -1,17 +1,25 @@
-import { Client, Message } from 'discord.js'
+import { Client, Message, GatewayIntentBits } from 'discord.js'
 import Discord from 'discord.js'
-import secret from '../secrets/bot.json'
+import * as dotenv from 'dotenv'
+dotenv.config()
 import config from '../config.json'
 import allCommands from './allCommands'
+import { log } from './log/logging'
 
-const client: Client = new Discord.Client()
-
-client.on('message', (message: Message) => {
+const client: Client = new Discord.Client({
+    intents: [
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages
+    ],
+})
+client.on('messageCreate', (message: Message) => {
     try {
         if (
             message.content.startsWith(config.commandPrefix) &&
             !message.author.bot
         ) {
+
             const args = message.content
                 .slice(config.commandPrefix.length)
                 .split(/ +/)
@@ -24,13 +32,13 @@ client.on('message', (message: Message) => {
                 }
             }
         }
-    } catch (e) {
-        console.log(e)
+    } catch (e: any) {
+        log(e, 'error')
     }
 })
 
 client.on('ready', () => {
-    console.log('Discord bot ready')
+    log("Discord Bot Ready", 'info')
 })
 
-client.login(secret.token)
+client.login(process.env.TOKEN)
